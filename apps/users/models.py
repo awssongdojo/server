@@ -21,6 +21,11 @@ class UserManager(models.Manager):
         
 
     def easy_create(self, data):
+        errors = []
+        matching_users = User.objects.filter(email=data['email'])
+        if matching_users:
+            errors.append('Email aready in use')
+            return errors
         hashed = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
         return User.objects.create(
             first_name=data["first_name"],
@@ -28,6 +33,7 @@ class UserManager(models.Manager):
             email=data['email'],
             pw_hash=hashed.decode(),
         )
+
     def login(self, data):
         matching_users = User.objects.filter(email=data['email'])
         if matching_users:
