@@ -1,14 +1,15 @@
 from django.shortcuts import HttpResponse
 from .models import User
 from .models import UserManager
+from ..songList.models import Song
 from django.core import serializers
 import json
 
 
 def show(req, user_id):
-    user = User.objects.filter(id=user_id)
-    json_user = serializers.serialize('json', user)
-    return HttpResponse(json_user, status=200, content_type='application/json')
+    songs = Song.objects.filter(user=user_id)
+    json_songs = serializers.serialize('json', songs)
+    return HttpResponse(json_songs, status=200, content_type='application/json')
 
 def create(req):
     post_data = json.loads(req.body.decode())
