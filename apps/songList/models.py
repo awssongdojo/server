@@ -1,8 +1,5 @@
 from django.db import models
 from ..users.models import User
-import re
-import bcrypt
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
 class SongManager(models.Manager):
