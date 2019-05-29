@@ -7,6 +7,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 class UserManager(models.Manager):
     def validate(self, data):
         errors = []
+        matching_users = User.objects.filter(email=data['email'])
         if len(data['first_name']) <2:
             errors.append('First name must be at least 2 Characters long')
         if len(data['last_name']) <2:
@@ -15,17 +16,11 @@ class UserManager(models.Manager):
             errors.append('Password must be at least 8 characters Long')
         if not EMAIL_REGEX.match(data["email"]):
             errors.append('Email must be valid!')
-        return errors
-
-        
-        
-
-    def easy_create(self, data):
-        errors = []
-        matching_users = User.objects.filter(email=data['email'])
         if matching_users:
             errors.append('Email aready in use')
-            return errors
+        return errors
+
+    def easy_create(self, data):
         hashed = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
         return User.objects.create(
             first_name=data["first_name"],
