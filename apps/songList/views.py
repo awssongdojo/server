@@ -3,6 +3,7 @@ from .models import Song
 from .models import SongManager
 from django.core import serializers
 import json
+from ..users.models import User
 
 
 def index(req):
@@ -18,4 +19,12 @@ def add(req):
     Song.objects.easy_create(post_data)
     songs = Song.objects.all()
     json_songs = serializers.serialize('json', songs)
+    return HttpResponse(json_songs, status=200, content_type='application/json')
+
+def add_playlist(req):
+    post_data = json.loads(req.body.decode())
+    song = Song.objects.get(id=post_data['song_id'])
+    user = User.objects.get(id=post_data['user_id'])
+    song.playlists.add(user)
+    json_songs = serializers.serialize('json', song.playlists.all())
     return HttpResponse(json_songs, status=200, content_type='application/json')

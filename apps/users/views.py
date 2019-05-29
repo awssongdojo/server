@@ -6,6 +6,12 @@ from django.core import serializers
 import json
 
 
+def show_all_users(req):
+    users = User.objects.all()
+    print(users)
+    json_users = serializers.serialize('json', users)
+    return HttpResponse(json_users, status=200, content_type='application/json')
+
 def show(req, user_id):
     songs = Song.objects.filter(user=user_id)
     json_songs = serializers.serialize('json', songs)

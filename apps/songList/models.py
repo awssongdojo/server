@@ -29,3 +29,5 @@ class Song(models.Model):
     playlists = models.ManyToManyField(User, related_name="users")
     updated_at = models.DateTimeField(auto_now=True)
     objects = SongManager()
+
+
