@@ -3,7 +3,11 @@ from ..users.models import User
 
 
 class SongManager(models.Manager):
-    pass      
+    def easy_create(self, data):
+        return Song.objects.create(
+            artist=data['artist'],
+            title=data['title'],
+        )     
 
 class Song(models.Model):
     artist = models.CharField(max_length=255)
@@ -12,3 +16,4 @@ class Song(models.Model):
     playlists = models.ManyToManyField(User, related_name="users")
     updated_at = models.DateTimeField(auto_now=True)
     objects = SongManager()
+
