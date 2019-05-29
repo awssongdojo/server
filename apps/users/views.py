@@ -44,5 +44,7 @@ def login(req):
     json_user = json.dumps(user)
     return HttpResponse(json_user, status=200, content_type="application/json")
 
-def user_playlist(req):
-    print('hello')
+def user_playlist(req, user_id):
+    songs = Song.objects.filter(user_id=user_id)
+    json_songs = serializers.serialize('json', songs)
+    return HttpResponse(json_songs, status=200, content_type='application/json')
