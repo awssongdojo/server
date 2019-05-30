@@ -7,10 +7,17 @@ from django.core import serializers
 import json
 
 
+def show_all_users(req):
+    users = User.objects.all()
+    print(users)
+    json_users = serializers.serialize('json', users)
+    return HttpResponse(json_users, status=200, content_type='application/json')
+
 def show(req, user_id):
-    songs = Song.objects.filter(user=user_id)
-    json_songs = serializers.serialize('json', songs)
-    return HttpResponse(json_songs, status=200, content_type='application/json')
+    user = User.objects.filter(id=user_id)
+    
+    json_user = serializers.serialize('json', user)
+    return HttpResponse(json_user, status=200, content_type='application/json')
 
 def create(req):
     post_data = json.loads(req.body.decode())
@@ -38,6 +45,10 @@ def login(req):
     json_user = json.dumps(user)
     return HttpResponse(json_user, status=200, content_type="application/json")
 
+def user_playlist(req, user_id):
+    songs = Song.objects.filter(user_id=user_id)
+    json_songs = serializers.serialize('json', songs)
+    return HttpResponse(json_songs, status=200, content_type='application/json')
 def get(req, song_id):
     users = User.objects.filter(playlist=song_id)
     json_users = serializers.serialize('json', users)

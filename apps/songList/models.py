@@ -71,8 +71,12 @@ class Song(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = SongManager()
 
+<<<<<<< HEAD
 class Playlist(models.Model):
     songs =  models.ForeignKey(Song, related_name="playlist", on_delete=models.CASCADE)
     users =  models.ForeignKey(User, related_name="playlist", on_delete=models.CASCADE)
     count =  models.IntegerField()
     objects = SongManager()
+=======
+
+>>>>>>> 51f62a6529974b27a3b42d69f195270c38fc1b6f

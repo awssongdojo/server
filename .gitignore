@@ -1,3 +1,4 @@
 GroupEnv/
 *.pyc
 __pycache__
+venv
