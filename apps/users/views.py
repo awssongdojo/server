@@ -2,6 +2,7 @@ from django.shortcuts import HttpResponse
 from .models import User
 from .models import UserManager
 from ..songList.models import Song
+from ..songList.models import Playlist
 from django.core import serializers
 import json
 
@@ -49,8 +50,9 @@ def user_playlist(req, user_id):
     json_songs = serializers.serialize('json', songs)
     return HttpResponse(json_songs, status=200, content_type='application/json')
 def get(req, song_id):
-    users = User.objects.filter(users=song_id)
+    users = User.objects.filter(playlist=song_id)
     json_users = serializers.serialize('json', users)
+    print(json_users)
     return HttpResponse(json_users, status=200, content_type='application/json')
 
 def other(req, user_id):
