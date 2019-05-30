@@ -26,5 +26,6 @@ def add_playlist(req):
     song = Song.objects.get(id=post_data['song_id'])
     user = User.objects.get(id=post_data['user_id'])
     song.playlists.add(user)
-    json_songs = serializers.serialize('json', song.playlists.all())
-    return HttpResponse(json_songs, status=200, content_type='application/json')
+    updated_song = Song.objects.get(id=post_data['song_id'])
+    json_song = serializers.serialize('json', [updated_song])
+    return HttpResponse(json_song, status=200, content_type='application/json')
