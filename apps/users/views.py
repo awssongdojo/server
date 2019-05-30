@@ -36,3 +36,13 @@ def login(req):
     }
     json_user = json.dumps(user)
     return HttpResponse(json_user, status=200, content_type="application/json")
+
+def get(req, song_id):
+    users = User.objects.filter(users=song_id)
+    json_users = serializers.serialize('json', users)
+    return HttpResponse(json_users, status=200, content_type='application/json')
+
+def other(req, user_id):
+    user = User.objects.get(id=user_id)
+    json_user = serializers.serialize('json', [user])
+    return HttpResponse(json_user, status=200, content_type='application/json')
