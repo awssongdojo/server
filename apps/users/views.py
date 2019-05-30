@@ -49,6 +49,7 @@ def user_playlist(req, user_id):
     songs = Song.objects.filter(user_id=user_id)
     json_songs = serializers.serialize('json', songs)
     return HttpResponse(json_songs, status=200, content_type='application/json')
+    
 def get(req, song_id):
     users = User.objects.filter(playlist=song_id)
     json_users = serializers.serialize('json', users)
