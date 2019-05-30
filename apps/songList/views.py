@@ -23,6 +23,7 @@ def add(req):
 
 def add_playlist(req):
     post_data = json.loads(req.body.decode())
+    print(post_data)
     song = Song.objects.get(id=post_data['song_id'])
     user = User.objects.get(id=post_data['user_id'])
     song.playlists.add(user)
