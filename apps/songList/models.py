@@ -64,6 +64,28 @@ class SongManager(models.Manager):
                 data['users'].append(user_obj)
         return data
 
+    def getPlaylist(self, user_id):
+        user = User.objects.get(id=user_id)
+        data = {
+            'id': user.id,
+            'first': user.first_name,
+            'last': user.last_name,
+            'songs': [
+
+            ]
+        }
+        playlist = Playlist.objects.filter(users=user.id)
+        if playlist:
+            for entry in playlist:
+                song = Song.objects.get(id=entry.songs.id)
+                song_obj = {
+                    'song_artist': song.artist,
+                    'song_title': song.title,
+                    'count': entry.count
+                }
+                data['songs'].append(song_obj)
+        return data
+
 class Song(models.Model):
     artist = models.CharField(max_length=255)
     title = models.CharField(max_length=255)

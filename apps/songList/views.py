@@ -40,7 +40,7 @@ def get(req, song_id):
     return HttpResponse(json_song, status=200, content_type='application/json')
 
 def playlist(req, other_id):
-    playlist = Song.objects.filter(playlist=other_id)
+    playlist = Playlist.objects.filter(users=other_id)
     json_playlist = serializers.serialize('json', playlist)
     return HttpResponse(json_playlist, status=200, content_type='application/json')
 
@@ -52,5 +52,12 @@ def add_playlist(req):
     songs = Song.objects.getAllSongs()
     json_songs = json.dumps(songs)
     return HttpResponse(json_songs, status=200, content_type='application/json')
+
+def other(req, user_id):
+    data = Playlist.objects.getPlaylist(user_id)
+    print(data)
+    data = json.dumps(data)
+    print(data)
+    return HttpResponse(data, status=200, content_type='application/json')
     
 
