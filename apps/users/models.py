@@ -36,6 +36,7 @@ class UserManager(models.Manager):
             if bcrypt.checkpw(data['password'].encode(), user.pw_hash.encode()):
                 return (True, user)
         return(False, ['Email or Password are Incorrect'])
+
             
 
 class User(models.Model):
