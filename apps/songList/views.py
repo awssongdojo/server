@@ -20,8 +20,8 @@ def add(req):
     if errors:
         return HttpResponse(json.dumps(errors), status=400, content_type='application/json')
     Song.objects.easy_create(post_data)
-    songs = Song.objects.all()
-    json_songs = serializers.serialize('json', songs)
+    songs = Song.objects.getAllSongs()
+    json_songs = json.dumps(songs)
     return HttpResponse(json_songs, status=200, content_type='application/json')
 
 def add_playlist(req):
